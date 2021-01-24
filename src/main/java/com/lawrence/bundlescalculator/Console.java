@@ -6,35 +6,37 @@ import java.util.Scanner;
 
 public class Console {
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) {
 
         Menu response = null;
 
         do {
-            response = IOUtil.getResponse();
+            response = OrderInput.getResponse();
 
             switch (response) {
 
                 case INPUT_ORDER:
-                    List<Bundle> quotation = new ArrayList<>();
 
                     System.out.println("Please type your order!");
 
-                    List<Post> orderList = IOUtil.inputByConsole();
+                    Order order = OrderInput.inputByConsole();
 
                     //Calculator calculator = fileReader();
 
-                    if (orderList == null) {
+                    if (order == null) {
                         System.out.println("No order provided!");
                         return;
                     }
 
-                    for(Post p : orderList){
-                        quotation.addAll(Calculator.calculateBundles(p));
+                    List<QuotationItem> quotationItems = new ArrayList<>();
 
+                    for (OrderItem orderItem : order.getOrderItems()) {
+                        quotationItems.add(Calculator.calculateBundles(orderItem));
                     }
+                    Quotation quotation = Quotation.builder().quotationItems(quotationItems).build();
 
-                    IOUtil.output(orderList, quotation);
+                    OrderOutput.output(quotation);
+
                     break;
 
                 case EXIT:

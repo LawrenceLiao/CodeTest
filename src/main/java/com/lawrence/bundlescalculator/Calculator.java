@@ -9,22 +9,25 @@ import java.util.stream.Collectors;
 
 public class Calculator {
 
-    public static List<Bundle> calculateBundles(Post post) {
+    public static QuotationItem calculateBundles(OrderItem orderItem) {
 
-        List<Bundle> detailsOfBundles = new ArrayList<>();
-        List<Integer> ListOfBundle = new ArrayList<>();
-        List<Integer> bundleType = post.bundleTypes().keySet().stream().collect(Collectors.toList());
+
+        List<Integer> bundleType = MediaBundles.BUNDLE_LIST
+                .stream()
+                .filter(submissionBundles -> submissionBundles.getCodeOfMedia().equals(orderItem.getCodeOfMedia()))
+                .map(submissionBundles -> submissionBundles.getNumPerBundle()).collect(Collectors.toList());
 
         ArrayList<Integer> bundleUsed = new ArrayList<>();
-        for (int i = 0; i <= post.getNumber(); i++) {
+        for (int i = 0; i <= orderItem.getNumOfPost(); i++) {
             bundleUsed.add(0);
         }
+
 
         int numOfBundle = bundleType.size();
 
         Map<Integer, HashMap<Integer, Integer>> changeMap = new HashMap<>();
 
-        for (int num = 1; num <= post.getNumber(); num++) {
+        for (int num = 1; num <= orderItem.getNumOfPost(); num++) {
             int minCount = num;
             HashMap<Integer, Integer> minBundleMap = new HashMap<>();
 
@@ -57,23 +60,31 @@ public class Calculator {
             bundleUsed.set(num, minCount);
             changeMap.put(num, minBundleMap);
 
-            if (num == post.getNumber()) {
+
+            if (num == orderItem.getNumOfPost()) {
+
+                double totalPrice = 0.0;
+                Map<SubmissionBundles, Integer> detailsOfBundles = new HashMap<>();
+
                 for (Map.Entry<Integer, Integer> entry : minBundleMap.entrySet()) {
-                    Bundle bundle = Bundle.builder()
-                            .format(post.getClass().getSimpleName())
-                            .code(post.getCode())
-                            .numOfPosts(entry.getKey())
-                            .price(post.bundleTypes().get(entry.getKey()))
-                            .numOfBundles(entry.getValue()).build();
 
+                    SubmissionBundles bundle = MediaBundles.BUNDLE_LIST
+                            .stream()
+                            .filter(submissionBundles -> submissionBundles.getCodeOfMedia().equals(orderItem.getCodeOfMedia()))
+                            .filter(bundles -> bundles.getNumPerBundle() == entry.getKey()).findAny().get();
+                    totalPrice += bundle.getPriceOfBundle() * entry.getValue();
 
-                    detailsOfBundles.add(bundle);
+                    detailsOfBundles.put(bundle, entry.getValue());
                 }
 
+                QuotationItem quotationItem = QuotationItem.builder().codeOfMedia(orderItem.getCodeOfMedia()).totalNumOfPost(orderItem.getNumOfPost()).totalPrice(totalPrice).detailsOfBundles(detailsOfBundles).build();
+                return quotationItem;
             }
 
         }
-        return detailsOfBundles;
+
+
+        return null;
 
     }
 
