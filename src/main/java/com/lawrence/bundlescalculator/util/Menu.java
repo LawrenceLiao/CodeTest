@@ -1,4 +1,4 @@
-package com.lawrence.bundlescalculator;
+package com.lawrence.bundlescalculator.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

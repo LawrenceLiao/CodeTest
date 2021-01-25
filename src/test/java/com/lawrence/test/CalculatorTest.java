@@ -1,18 +1,21 @@
 package com.lawrence.test;
 
+import com.lawrence.bundlescalculator.algorithm.Calculator;
+import com.lawrence.bundlescalculator.model.OrderItem;
+import com.lawrence.bundlescalculator.algorithm.QuotationItem;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CalculatorTest {
 
     @Test
     void calculateBundles() {
-       /* Post post = Image.builder().code("IMG").number(25).build();
-        List<Bundle> bundleList = Calculator.calculateBundles(post);
+        OrderItem orderItem = OrderItem.builder().codeOfMedia("IMG").numOfPost(25).build();
 
-        Bundle bundleExample = bundleList.stream().filter(bundle -> bundle.getNumOfPosts() == 10).findFirst().get();
+        QuotationItem quotationItem = Calculator.calculateBundles(orderItem);
 
-        assertTrue(bundleList.size()==2);
-        assertEquals(2,bundleExample.getNumOfBundles());
-*/
+        assertTrue(quotationItem.getDetailsOfBundles().size() == 2);
+        //assertEquals(2,quotationItem.getDetailsOfBundles().get(10));
     }
 }

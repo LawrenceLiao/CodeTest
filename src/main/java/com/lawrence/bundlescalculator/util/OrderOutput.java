@@ -1,4 +1,9 @@
-package com.lawrence.bundlescalculator;
+package com.lawrence.bundlescalculator.util;
+
+import com.lawrence.bundlescalculator.model.Quotation;
+import com.lawrence.bundlescalculator.model.SubmissionBundles;
+import com.lawrence.bundlescalculator.algorithm.QuotationItem;
+import lombok.experimental.UtilityClass;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -6,9 +11,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@UtilityClass
 public class OrderOutput {
 
-    public static void output(Quotation quotation) {
+    public void output(Quotation quotation) {
 
         List<QuotationItem> quotationItems = quotation.getQuotationItems();
 
@@ -18,7 +24,7 @@ public class OrderOutput {
 
         for (QuotationItem item : quotationItems) {
 
-            System.out.println(item.getTotalNumOfPost() + " " + item.getCodeOfMedia() + " $" + item.getTotalPrice());
+            System.out.println(item.getTotalNum() + " " + item.getCodeOfMedia() + " $" + item.getTotalPrice());
 
             for (Map.Entry<SubmissionBundles, Integer> entry : item.getDetailsOfBundles().entrySet()) {
 
@@ -29,7 +35,7 @@ public class OrderOutput {
 
     }
 
-    public static void fileWriter(Quotation quotation) {
+    public void fileWriter(Quotation quotation) {
         try {
             FileWriter writer = new FileWriter("Quotation");
             BufferedWriter out = new BufferedWriter(writer);

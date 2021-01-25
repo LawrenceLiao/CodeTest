@@ -1,10 +1,19 @@
-package com.lawrence.bundlescalculator;
+package com.lawrence.bundlescalculator.service;
+
+import com.lawrence.bundlescalculator.algorithm.Calculator;
+import com.lawrence.bundlescalculator.algorithm.QuotationItem;
+import com.lawrence.bundlescalculator.model.Order;
+import com.lawrence.bundlescalculator.model.OrderItem;
+import com.lawrence.bundlescalculator.model.Quotation;
+import com.lawrence.bundlescalculator.util.Menu;
+import com.lawrence.bundlescalculator.util.OrderInput;
+import com.lawrence.bundlescalculator.util.OrderOutput;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Console {
+public class CalculatorStarter {
 
     public static void main(String[] args) {
 

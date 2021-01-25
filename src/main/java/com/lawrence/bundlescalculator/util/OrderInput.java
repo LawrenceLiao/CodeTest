@@ -1,5 +1,8 @@
-package com.lawrence.bundlescalculator;
+package com.lawrence.bundlescalculator.util;
 
+import com.lawrence.bundlescalculator.model.Order;
+import com.lawrence.bundlescalculator.model.OrderItem;
+import com.lawrence.bundlescalculator.algorithm.Calculator;
 import lombok.experimental.UtilityClass;
 
 import java.io.BufferedReader;
@@ -81,7 +84,7 @@ public class OrderInput {
         }
     }
 
-    public static Menu getResponse() {
+    public Menu getResponse() {
 
 
         System.out.println("-----------Menu-----------");

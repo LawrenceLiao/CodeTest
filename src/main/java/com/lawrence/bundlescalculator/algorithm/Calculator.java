@@ -1,4 +1,8 @@
-package com.lawrence.bundlescalculator;
+package com.lawrence.bundlescalculator.algorithm;
+
+import com.lawrence.bundlescalculator.model.MediaBundles;
+import com.lawrence.bundlescalculator.model.OrderItem;
+import com.lawrence.bundlescalculator.model.SubmissionBundles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +16,8 @@ public class Calculator {
     public static QuotationItem calculateBundles(OrderItem orderItem) {
 
 
-        List<Integer> bundleType = MediaBundles.BUNDLE_LIST
+        List<Integer> bundleType = MediaBundles.BUNDLE_LIST.get(orderItem.getCodeOfMedia())
                 .stream()
-                .filter(submissionBundles -> submissionBundles.getCodeOfMedia().equals(orderItem.getCodeOfMedia()))
                 .map(submissionBundles -> submissionBundles.getNumPerBundle()).collect(Collectors.toList());
 
         ArrayList<Integer> bundleUsed = new ArrayList<>();
@@ -60,24 +63,20 @@ public class Calculator {
             bundleUsed.set(num, minCount);
             changeMap.put(num, minBundleMap);
 
-
             if (num == orderItem.getNumOfPost()) {
 
-                double totalPrice = 0.0;
                 Map<SubmissionBundles, Integer> detailsOfBundles = new HashMap<>();
 
                 for (Map.Entry<Integer, Integer> entry : minBundleMap.entrySet()) {
 
-                    SubmissionBundles bundle = MediaBundles.BUNDLE_LIST
+                    SubmissionBundles bundle = MediaBundles.BUNDLE_LIST.get(orderItem.getCodeOfMedia())
                             .stream()
-                            .filter(submissionBundles -> submissionBundles.getCodeOfMedia().equals(orderItem.getCodeOfMedia()))
                             .filter(bundles -> bundles.getNumPerBundle() == entry.getKey()).findAny().get();
-                    totalPrice += bundle.getPriceOfBundle() * entry.getValue();
 
                     detailsOfBundles.put(bundle, entry.getValue());
                 }
 
-                QuotationItem quotationItem = QuotationItem.builder().codeOfMedia(orderItem.getCodeOfMedia()).totalNumOfPost(orderItem.getNumOfPost()).totalPrice(totalPrice).detailsOfBundles(detailsOfBundles).build();
+                QuotationItem quotationItem = QuotationItem.builder().codeOfMedia(orderItem.getCodeOfMedia()).detailsOfBundles(detailsOfBundles).build();
                 return quotationItem;
             }
 
