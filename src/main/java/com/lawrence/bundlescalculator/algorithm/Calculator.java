@@ -1,42 +1,32 @@
 package com.lawrence.bundlescalculator.algorithm;
 
-import com.lawrence.bundlescalculator.model.MediaBundles;
-import com.lawrence.bundlescalculator.model.OrderItem;
-import com.lawrence.bundlescalculator.model.SubmissionBundles;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 public class Calculator {
 
-    public static QuotationItem calculateBundles(OrderItem orderItem) {
+    public ComboOfBundles calculateBundles(ElementsOfCal elements) {
 
-
-        List<Integer> bundleType = MediaBundles.BUNDLE_LIST.get(orderItem.getCodeOfMedia())
-                .stream()
-                .map(submissionBundles -> submissionBundles.getNumPerBundle()).collect(Collectors.toList());
 
         ArrayList<Integer> bundleUsed = new ArrayList<>();
-        for (int i = 0; i <= orderItem.getNumOfPost(); i++) {
+        for (int i = 0; i <= elements.getNumOfPost(); i++) {
             bundleUsed.add(0);
         }
 
 
-        int numOfBundle = bundleType.size();
+        int numOfBundle = elements.getTypeOfBundles().size();
 
         Map<Integer, HashMap<Integer, Integer>> changeMap = new HashMap<>();
 
-        for (int num = 1; num <= orderItem.getNumOfPost(); num++) {
+        for (int num = 1; num <= elements.getNumOfPost(); num++) {
             int minCount = num;
             HashMap<Integer, Integer> minBundleMap = new HashMap<>();
 
             for (int kind = 0; kind < numOfBundle; kind++) {
 
-                int bundleValue = bundleType.get(kind);
+                int bundleValue = elements.getTypeOfBundles().get(kind);
                 int gap = num - bundleValue;
 
                 if (bundleValue <= num) {
@@ -63,30 +53,17 @@ public class Calculator {
             bundleUsed.set(num, minCount);
             changeMap.put(num, minBundleMap);
 
-            if (num == orderItem.getNumOfPost()) {
-
-                Map<SubmissionBundles, Integer> detailsOfBundles = new HashMap<>();
-
-                for (Map.Entry<Integer, Integer> entry : minBundleMap.entrySet()) {
-
-                    SubmissionBundles bundle = MediaBundles.BUNDLE_LIST.get(orderItem.getCodeOfMedia())
-                            .stream()
-                            .filter(bundles -> bundles.getNumPerBundle() == entry.getKey()).findAny().get();
-
-                    detailsOfBundles.put(bundle, entry.getValue());
-                }
-
-                QuotationItem quotationItem = QuotationItem.builder().codeOfMedia(orderItem.getCodeOfMedia()).detailsOfBundles(detailsOfBundles).build();
-                return quotationItem;
+            if (num == elements.getNumOfPost()) {
+                ComboOfBundles comboOfBundles = ComboOfBundles.builder().numOfBundles(minBundleMap).build();
+                return comboOfBundles;
             }
 
         }
-
-
         return null;
-
     }
 
 }
+
+
 
 

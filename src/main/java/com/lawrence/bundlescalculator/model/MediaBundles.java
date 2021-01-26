@@ -5,7 +5,6 @@ import java.util.*;
 public class MediaBundles {
     public final static Map<String, List<SubmissionBundles>> BUNDLE_LIST = new HashMap<>();
 
-
     static {
         BUNDLE_LIST.put("IMG", new ArrayList<SubmissionBundles>());
         BUNDLE_LIST.put("FLAC", new ArrayList<SubmissionBundles>());

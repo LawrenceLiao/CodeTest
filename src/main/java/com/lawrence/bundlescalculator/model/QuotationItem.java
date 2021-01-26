@@ -1,6 +1,5 @@
-package com.lawrence.bundlescalculator.algorithm;
+package com.lawrence.bundlescalculator.model;
 
-import com.lawrence.bundlescalculator.model.SubmissionBundles;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

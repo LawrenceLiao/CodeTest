@@ -2,7 +2,7 @@ package com.lawrence.bundlescalculator.util;
 
 import com.lawrence.bundlescalculator.model.Quotation;
 import com.lawrence.bundlescalculator.model.SubmissionBundles;
-import com.lawrence.bundlescalculator.algorithm.QuotationItem;
+import com.lawrence.bundlescalculator.model.QuotationItem;
 import lombok.experimental.UtilityClass;
 
 import java.io.BufferedWriter;

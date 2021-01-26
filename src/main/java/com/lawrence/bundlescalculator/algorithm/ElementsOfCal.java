@@ -1,4 +1,4 @@
-package com.lawrence.bundlescalculator.model;
+package com.lawrence.bundlescalculator.algorithm;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Quotation {
-    private List<QuotationItem> quotationItems;
+public class ElementsOfCal {
+    private int numOfPost;
+    private List<Integer> typeOfBundles;
 }

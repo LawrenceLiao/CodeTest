@@ -1,17 +1,17 @@
-package com.lawrence.bundlescalculator.model;
+package com.lawrence.bundlescalculator.algorithm;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+import java.util.Map;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Quotation {
-    private List<QuotationItem> quotationItems;
+public class ComboOfBundles {
+    private Map<Integer, Integer> numOfBundles;
 }

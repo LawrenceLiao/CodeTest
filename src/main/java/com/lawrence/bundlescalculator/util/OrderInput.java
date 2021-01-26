@@ -86,12 +86,10 @@ public class OrderInput {
 
     public Menu getResponse() {
 
-
         System.out.println("-----------Menu-----------");
         for (Menu m : Menu.values()) {
             System.out.println(m.getOption() + ". " + m.getContent());
         }
-
 
         System.out.println("Please enter your choice!");
 
@@ -101,7 +99,6 @@ public class OrderInput {
         for (Menu m : Menu.values()) {
             if (choice.equalsIgnoreCase(m.getOption()))
                 return m;
-
         }
         System.out.println("Invalid input, please try again!");
 
